@@ -47,3 +47,8 @@ class RepositorioEmpleadoSQLite(RepositorioEmpleado):
                                                               empleado.otro_apellido,empleado.usuario, empleado.contraseña, empleado.fecha_nacimiento ))
             conn.commit()
 
+    def eliminar_datos(self):
+        with self.conexion() as conn:
+            conn.execute("DELETE FROM empleados")
+            conn.execute("DELETE FROM sqlite_sequence WHERE name='empleados'")
+            conn.commit()
