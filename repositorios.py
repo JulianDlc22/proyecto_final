@@ -1,22 +1,30 @@
 import sqlite3
-from Clases_Constructoras import Empleado
+from Clases_Constructoras import Empleado, Rol
 
-DB_NAME = "escuela.db"
+DB_NAME = "escuela1.db"
 
 
 class RepositorioEmpleado:
+
+    def conexion(self):
+        pass
+
+    def crear_tabla(self):
+        pass
 
     def guardar(self, empleado: Empleado):
         pass
 
     def listar(self):
         pass
+
     def eliminar(self):
         pass
 
+
 class RepositorioEmpleadoSQLite(RepositorioEmpleado):
 
-    def __init__(self , base_datos = DB_NAME):
+    def __init__(self, base_datos=DB_NAME):
         self.base_datos = base_datos
         self.crear_tabla()
 
@@ -36,10 +44,11 @@ class RepositorioEmpleadoSQLite(RepositorioEmpleado):
                         primer_apellido TEXT NOT NULL,
                         segundo_apellido TEXT NOT NULL,
                         otro_apellido TEXT NOT NULL,
+                        rol TEXT NOT NULL,
                         usuario TEXT NOT NULL,
                         contraseña TEXT NOT NULL,
                         fecha_nacimiento TEXT NOT NULL);
-                        
+
                         """)
 
     def guardar(self, empleado: Empleado):
