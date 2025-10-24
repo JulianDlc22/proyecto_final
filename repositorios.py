@@ -1,17 +1,14 @@
 import sqlite3
-from Clases_Constructoras import Empleado, Rol
-
+from Clases_Constructoras import Empleado
 
 DB_NAME = "escuela.db"
 
+
 class RepositorioEmpleado:
 
-    def conexion(self):
-        pass
-    def crear_tabla(self):
-        pass
     def guardar(self, empleado: Empleado):
         pass
+
     def listar(self):
         pass
     def eliminar(self):
@@ -39,7 +36,6 @@ class RepositorioEmpleadoSQLite(RepositorioEmpleado):
                         primer_apellido TEXT NOT NULL,
                         segundo_apellido TEXT NOT NULL,
                         otro_apellido TEXT NOT NULL,
-                        rol TEXT NOT NULL,
                         usuario TEXT NOT NULL,
                         contraseña TEXT NOT NULL,
                         fecha_nacimiento TEXT NOT NULL);
@@ -49,9 +45,11 @@ class RepositorioEmpleadoSQLite(RepositorioEmpleado):
     def guardar(self, empleado: Empleado):
         with self.conexion() as conn:
             conn.execute(""" INSERT INTO empleados (DPI, primer_nombre, segundo_nombre, otro_nombre, primer_apellido, segundo_apellido, otro_apellido,rol, usuario, contraseña, fecha_nacimiento) 
-                             VALUES (?,?,?,?,?,?,?,?,?,?,?)""",(empleado.DPI, empleado.primer_nombre, empleado.segundo_nombre,
-                                                              empleado.otro_nombre, empleado.primer_apellido, empleado.segundo_apellido,
-                                                              empleado.otro_apellido,empleado.rol ,empleado.usuario, empleado.contraseña, empleado.fecha_nacimiento ))
+                             VALUES (?,?,?,?,?,?,?,?,?,?,?)""",
+                         (empleado.DPI, empleado.primer_nombre, empleado.segundo_nombre,
+                          empleado.otro_nombre, empleado.primer_apellido, empleado.segundo_apellido,
+                          empleado.otro_apellido, empleado.rol, empleado.usuario, empleado.contraseña,
+                          empleado.fecha_nacimiento))
             conn.commit()
 
     def eliminar(self):
@@ -60,22 +58,28 @@ class RepositorioEmpleadoSQLite(RepositorioEmpleado):
             conn.execute("DELETE FROM sqlite_sequence WHERE name='empleados'")
             conn.commit()
 
+
 class RepositorioRol:
 
     def conexion(self):
         pass
+
     def crear_tabla(self):
         pass
+
     def guardar(self, rol: Rol):
         pass
+
     def listar(self):
         pass
+
     def eliminar(self):
         pass
 
+
 class RepositorioRolSQLite(RepositorioRol):
 
-    def __init__(self, base_datos = DB_NAME):
+    def __init__(self, base_datos=DB_NAME):
         self.base_datos = base_datos
         self.crear_tabla()
 
@@ -90,12 +94,13 @@ class RepositorioRolSQLite(RepositorioRol):
                                id_rol INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
                                nombre TEXT NOT NULL
                                ); """)
+
     def guardar(self, rol: Rol):
         with self.conexion() as conn:
             conn.execute(""" INSERT INTO rol (nombre) VALUES (?)""", (rol.nombre,))
             conn.commit()
 
-    def obtener_todos(self): #para la lista desplegable
+    def obtener_todos(self):  # para la lista desplegable
         with self.conexion() as conn:
             cursor = conn.execute("SELECT id_rol, nombre FROM rol")
             roles = []

@@ -1,3 +1,5 @@
+from operator import truediv
+
 from datetime import datetime
 import flet as ft
 from Clases_Constructoras import Empleado, Rol
