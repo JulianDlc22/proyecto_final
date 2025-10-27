@@ -1,7 +1,7 @@
 import sqlite3
 from Clases_Constructoras import Empleado, Rol
 
-DB_NAME = "escuela1.db"
+DB_NAME = "escuela.db"
 
 
 class RepositorioEmpleado:
