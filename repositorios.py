@@ -67,6 +67,13 @@ class RepositorioEmpleadoSQLite(RepositorioEmpleado):
             conn.execute("DELETE FROM sqlite_sequence WHERE name='empleados'")
             conn.commit()
 
+    # Verificacion de DPI unico - CORREGIDO
+    def obtener_por_dpi(self, dpi):
+        with self.conexion() as conn:
+            cursor = conn.execute("SELECT * FROM empleados WHERE DPI = ?", (dpi,))
+            resultado = cursor.fetchone()
+            return resultado
+
 
 class RepositorioRol:
 
@@ -118,3 +125,5 @@ class RepositorioRolSQLite(RepositorioRol):
                 rol.id = row['id_rol']
                 roles.append(rol)
             return roles
+
+
